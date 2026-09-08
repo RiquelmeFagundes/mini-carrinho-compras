@@ -1,7 +1,9 @@
 import React from "react";
 import { useState } from "react";
+import CardProduto from "./CardProduto";
+import Carrinho from "./Carrinho";
 
-// ---------------- Tabela gerada por IA ---------------------- 
+// ---------------- Tabela gerada por IA ----------------------
 const produtos = [
   { id: 1, name: "Tênis de Corrida Pro", price: 349.9 },
   { id: 2, name: "Relógio GPS Runner", price: 599.9 },
@@ -23,20 +25,59 @@ export default function App() {
     setCarrinho([...carrinho, { produto, quantidade: 1 }]);
   }
 
-  function handIncrease(id) {
+  function handleIncrease(id) {
     setCarrinho(
       carrinho.map((item) =>
-        item.id === id ? { ...item, quantidade: item.quantidade + 1 } : item
-      )
+        item.id === id ? { ...item, quantidade: item.quantidade + 1 } : item,
+      ),
     );
   }
 
-  function handDecrease(id) {
+  function handleDecrease(id) {
     setCarrinho(
       carrinho.map((item) =>
-      item.id === id ? {...item, quantidade: item.quantidade - 1} : item)
-    )
-  })
+        item.id === id && item.quantidade > 1
+          ? { ...item, quantidade: item.quantidade - 1 }
+          : item,
+      ),
+    );
+  }
 
-  return <div></div>;
+  function handleRemove(id) {
+    setCarrinho(carrinho.filter((item) => item.id !== id));
+  }
+
+  function handleSearchChange(e) {
+    setBusca(e.target.value);
+  }
+
+  const produtosFiltrados = produtos.filter((p) =>
+    p.name.toLowerCase().includes(search.toLowerCase()),
+  );
+
+  return (
+    <div className="app-content">
+      <h1>Equipamentos de Corrida</h1>
+
+      <input
+        type="text"
+        placeholder="Buscar produto..."
+        value={search}
+        onChange={handleSearchChange}
+      />
+
+      <div className="product-list">
+        {produtosFiltrados.map((produto) => (
+          <CardProduto key={produto.id} product={produto} onAdd={handleAdd} />
+        ))}
+      </div>
+
+      <Carrinho
+        cart={cart}
+        onIncrease={handleIncrease}
+        onDecrease={handleDecrease}
+        onRemove={handleRemove}
+      />
+    </div>
+  );
 }
