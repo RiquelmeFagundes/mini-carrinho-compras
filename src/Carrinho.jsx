@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function Carrinho({ carrinho, onIncrease, onDecrease, onRemove }) {
-    const total = carrinho.reduce((soma, item) => soma + item.price + item.quantidade, 0)
+    const total = carrinho.reduce((soma, item) => soma + item.price * item.quantidade, 0)
   return (
     <div className="carrinho">
       <h2>Carrinho</h2>
@@ -11,7 +11,7 @@ export default function Carrinho({ carrinho, onIncrease, onDecrease, onRemove })
       {carrinho.map((item) => (
         <div key={item.id} className="item-carrinho">
           <span>{item.name}</span>
-          <span>Qtd:{item.quantity}</span>
+          <span>Qtd:{item.quantidade}</span>
 
           <button onClick={() => onDecrease(item.id)}>-</button>
           <button onClick={() => onIncrease(item.id)}>+</button>

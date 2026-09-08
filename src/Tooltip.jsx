@@ -1,6 +1,7 @@
 import React from "react";
+import { useState } from "react";
 
-export default function Tooltip() {
+export default function Tooltip({text, children }) {
   const [visible, setVisible] = useState(false);
 
   return (
@@ -10,7 +11,7 @@ export default function Tooltip() {
       onMouseLeave={() => setVisible(false)}
     >
       {children}
-      {visible && <div className="tooltip-box">{texto}</div>}
+      {visible && <div className="tooltip-box">{text}</div>}
     </div>
   );
 }

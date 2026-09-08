@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import CardProduto from "./CardProduto";
 import Carrinho from "./Carrinho";
-
+import './App.css'
 // ---------------- Tabela gerada por IA ----------------------
 const produtos = [
   { id: 1, name: "Tênis de Corrida Pro", price: 349.9 },
@@ -17,12 +17,12 @@ export default function App() {
 
   function handleAdd(produto) {
     const existe = carrinho.find((item) => item.id === produto.id);
-  }
 
-  if (existe) {
-    handIncrease.add(produto.id);
-  } else {
-    setCarrinho([...carrinho, { produto, quantidade: 1 }]);
+    if (existe) {
+      handleIncrease.add(produto.id);
+    } else {
+      setCarrinho([...carrinho, { ...produto, quantidade: 1 }]);
+    }
   }
 
   function handleIncrease(id) {
@@ -52,7 +52,7 @@ export default function App() {
   }
 
   const produtosFiltrados = produtos.filter((p) =>
-    p.name.toLowerCase().includes(search.toLowerCase()),
+    p.name.toLowerCase().includes(busca.toLowerCase()),
   );
 
   return (
@@ -62,18 +62,18 @@ export default function App() {
       <input
         type="text"
         placeholder="Buscar produto..."
-        value={search}
+        value={busca}
         onChange={handleSearchChange}
       />
 
-      <div className="product-list">
+      <div className="lista-produto">
         {produtosFiltrados.map((produto) => (
-          <CardProduto key={produto.id} product={produto} onAdd={handleAdd} />
+          <CardProduto key={produto.id} produto={produto} onAdd={handleAdd} />
         ))}
       </div>
 
       <Carrinho
-        cart={cart}
+        carrinho={carrinho}
         onIncrease={handleIncrease}
         onDecrease={handleDecrease}
         onRemove={handleRemove}
