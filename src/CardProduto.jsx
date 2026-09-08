@@ -1,11 +1,18 @@
-import React from 'react';
-import Tooltip from './Tooltip';
+import React from "react";
+import Tooltip from "./Tooltip";
 
-export default function CardProduto({produto, onAdd}) {
-
+export default function CardProduto({ produto, onAdd }) {
   return (
-      <div className="card-produto">
-          <h3>{produto.name}</h3>
+    <div className="card-produto">
+      <h3>{produto.name}</h3>
+      <p>R$ {produto.price.toFixed(2)}</p>
+
+      <Tooltip text={`Adicionar ${produto.name} ao carrinho`}>
+              <button onClick={() => onAdd(produto)}
+              >
+                  Adicionar
+              </button>
+      </Tooltip>
     </div>
-  )
+  );
 }
