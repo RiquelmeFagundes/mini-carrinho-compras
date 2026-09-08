@@ -31,7 +31,7 @@ export default function App() {
     );
   }
 
-  function handDecrese(id) {
+  function handDecrease(id) {
     setCarrinho(
       carrinho.map((item) =>
       item.id === id ? {...item, quantidade: item.quantidade - 1} : item)
